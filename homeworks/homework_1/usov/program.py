@@ -2,6 +2,7 @@ import json
 import numpy as np
 import os
 from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
 
 def calc_ws(gamma_wat: float) -> float:
     """Расчет солесодержания в воде"""
@@ -174,3 +175,19 @@ if __name__ == "__main__":
         json.dump(output_data, f, indent=4)
         
     print(output_path)
+
+    # построение VLP
+    plt.figure(figsize=(9, 6))
+
+    plt.plot(q_liq, p_wf_list, marker='o', linewidth=2, markersize=4)
+
+    plt.xlabel('Дебит закачиваемой жидкости, м³/сут')
+    plt.ylabel('Забойное давление, атм')
+    plt.title('VLP')
+
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.tight_layout()
+
+    graph_path = os.path.join(script_dir, 'vlp.png')
+    plt.savefig(graph_path, dpi=300, bbox_inches='tight')
+    plt.show()
