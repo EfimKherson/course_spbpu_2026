@@ -208,7 +208,7 @@ def main(input_path, output_path):
 
     p_wh = params["p_wh"] * 101325  # атм -> Па
     t_wh_k = params["t_wh"] + 273  # °C -> К
-    rates = np.arange(1, 401)
+    rates = np.arange(1, 410, 10)
     p_wf_atm = [
         calc_p_wf(p_wh=p_wh, t_wh=t_wh_k, h0=0, md_vdp=params["md_vdp"], temp_grad=params["temp_grad"], gamma_wat=params["gamma_water"], angle=params["angle"], q_ms=q / 86400, d_tub=params["d_tub"], roughness=params["roughness"]) / 101325
         for q in rates
@@ -221,7 +221,6 @@ def main(input_path, output_path):
     with output_path.open("w", encoding="utf-8") as file:
         json.dump(output, file, indent=2, allow_nan=False)
 
-    print(f"Забойное давление при 100 м³/сут: {p_wf_atm[99]:.2f} атм")
     print(f"Результаты сохранены в {output_path}")
 
     plt.figure()
